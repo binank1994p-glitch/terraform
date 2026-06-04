@@ -1,0 +1,164 @@
+{
+    "Rules": [
+        {
+            "RuleArn": "arn:aws:elasticloadbalancing:us-east-1:043509840958:listener-rule/app/hr-dev-alb-customrouting/c9764c24796d1d4c/ddd852792e7da0b3/cb9f2e04d96a616b",
+            "Priority": "1",
+            "Conditions": [
+                {
+                    "Field": "http-header",
+                    "HttpHeaderConfig": {
+                        "HttpHeaderName": "custom-header",
+                        "Values": [
+                            "my-app-1",
+                            "app-1",
+                            "app1"
+                        ]
+                    }
+                }
+            ],
+            "Actions": [
+                {
+                    "Type": "forward",
+                    "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:043509840958:targetgroup/mtg1c-20260131001135607700000015/73026fee6941aa1e",
+                    "Order": 1,
+                    "ForwardConfig": {
+                        "TargetGroups": [
+                            {
+                                "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:043509840958:targetgroup/mtg1c-20260131001135607700000015/73026fee6941aa1e",
+                                "Weight": 1
+                            }
+                        ],
+                        "TargetGroupStickinessConfig": {
+                            "Enabled": true,
+                            "DurationSeconds": 3600
+                        }
+                    }
+                }
+            ],
+            "IsDefault": false,
+            "Transforms": []
+        },
+        {
+            "RuleArn": "arn:aws:elasticloadbalancing:us-east-1:043509840958:listener-rule/app/hr-dev-alb-customrouting/c9764c24796d1d4c/ddd852792e7da0b3/d80bcb71c8bd384a",
+            "Priority": "2",
+            "Conditions": [
+                {
+                    "Field": "http-header",
+                    "HttpHeaderConfig": {
+                        "HttpHeaderName": "custom-header",
+                        "Values": [
+                            "my-app-2",
+                            "app-2",
+                            "app2"
+                        ]
+                    }
+                }
+            ],
+            "Actions": [
+                {
+                    "Type": "forward",
+                    "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:043509840958:targetgroup/mtg2c-20260131001135607700000014/403bad5d6ab48b98",
+                    "Order": 1,
+                    "ForwardConfig": {
+                        "TargetGroups": [
+                            {
+                                "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:043509840958:targetgroup/mtg2c-20260131001135607700000014/403bad5d6ab48b98",
+                                "Weight": 1
+                            }
+                        ],
+                        "TargetGroupStickinessConfig": {
+                            "Enabled": true,
+                            "DurationSeconds": 3600
+                        }
+                    }
+                }
+            ],
+            "IsDefault": false,
+            "Transforms": []
+        },
+        {
+            "RuleArn": "arn:aws:elasticloadbalancing:us-east-1:043509840958:listener-rule/app/hr-dev-alb-customrouting/c9764c24796d1d4c/ddd852792e7da0b3/6aacb113ce053875",
+            "Priority": "3",
+            "Conditions": [
+                {
+                    "Field": "query-string",
+                    "QueryStringConfig": {
+                        "Values": [
+                            {
+                                "Key": "website",
+                                "Value": "aws-eks"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Actions": [
+                {
+                    "Type": "redirect",
+                    "Order": 1,
+                    "RedirectConfig": {
+                        "Protocol": "HTTPS",
+                        "Port": "#{port}",
+                        "Host": "stacksimplify.com",
+                        "Path": "/aws-eks/",
+                        "Query": "",
+                        "StatusCode": "HTTP_302"
+                    }
+                }
+            ],
+            "IsDefault": false,
+            "Transforms": []
+        },
+        {
+            "RuleArn": "arn:aws:elasticloadbalancing:us-east-1:043509840958:listener-rule/app/hr-dev-alb-customrouting/c9764c24796d1d4c/ddd852792e7da0b3/a666e61f46705be6",
+            "Priority": "4",
+            "Conditions": [
+                {
+                    "Field": "host-header",
+                    "Values": [
+                        "azure-aks11.myclick.agency"
+                    ],
+                    "HostHeaderConfig": {
+                        "Values": [
+                            "azure-aks11.myclick.agency"
+                        ]
+                    }
+                }
+            ],
+            "Actions": [
+                {
+                    "Type": "redirect",
+                    "Order": 1,
+                    "RedirectConfig": {
+                        "Protocol": "HTTPS",
+                        "Port": "#{port}",
+                        "Host": "stacksimplify.com",
+                        "Path": "/azure-aks/azure-kubernetes-service-introduction/",
+                        "Query": "",
+                        "StatusCode": "HTTP_302"
+                    }
+                }
+            ],
+            "IsDefault": false,
+            "Transforms": []
+        },
+        {
+            "RuleArn": "arn:aws:elasticloadbalancing:us-east-1:043509840958:listener-rule/app/hr-dev-alb-customrouting/c9764c24796d1d4c/ddd852792e7da0b3/238e3ed2f715780f",
+            "Priority": "default",
+            "Conditions": [],
+            "Actions": [
+                {
+                    "Type": "fixed-response",
+                    "Order": 1,
+                    "FixedResponseConfig": {
+                        "MessageBody": "Fixed Static message - for Root Context",
+                        "StatusCode": "200",
+                        "ContentType": "text/plain"
+                    }
+                }
+            ],
+            "IsDefault": true,
+            "Transforms": []
+        }
+    ]
+}
